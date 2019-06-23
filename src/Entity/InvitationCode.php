@@ -30,6 +30,11 @@ class InvitationCode
      */
     private $owner_id;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $invitee_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,6 +60,18 @@ class InvitationCode
     public function setOwnerId(?int $owner_id): self
     {
         $this->owner_id = $owner_id;
+
+        return $this;
+    }
+
+    public function getInviteeId(): ?int
+    {
+        return $this->invitee_id;
+    }
+
+    public function setInviteeId(?int $invitee_id): self
+    {
+        $this->invitee_id = $invitee_id;
 
         return $this;
     }
