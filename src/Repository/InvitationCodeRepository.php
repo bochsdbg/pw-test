@@ -19,6 +19,16 @@ class InvitationCodeRepository extends ServiceEntityRepository
         parent::__construct($registry, InvitationCode::class);
     }
 
+    public function findOneByCode($code): ?InvitationCode
+    {
+        return $this->createQueryBuilder('i')
+            ->andWhere('i.exampleField = :val')
+            ->setParameter('code', $code)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return InvitationCode[] Returns an array of InvitationCode objects
     //  */

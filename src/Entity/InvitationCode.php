@@ -26,14 +26,16 @@ class InvitationCode
     private $code;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      */
-    private $owner_id;
+    private $owner;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="invitee_id", referencedColumnName="id")
      */
-    private $invitee_id;
+    private $invitee;
 
     public function getId(): ?int
     {
@@ -72,6 +74,30 @@ class InvitationCode
     public function setInviteeId(?int $invitee_id): self
     {
         $this->invitee_id = $invitee_id;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getInvitee(): ?User
+    {
+        return $this->invitee;
+    }
+
+    public function setInvitee(?User $invitee): self
+    {
+        $this->invitee = $invitee;
 
         return $this;
     }
