@@ -22,7 +22,7 @@ class InvitationCodeRepository extends ServiceEntityRepository
     public function findOneByCode($code): ?InvitationCode
     {
         return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
+            ->andWhere('i.code = :code')
             ->setParameter('code', $code)
             ->getQuery()
             ->getOneOrNullResult()
