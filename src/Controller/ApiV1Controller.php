@@ -78,29 +78,19 @@ class ApiV1Controller extends AbstractController
                 throw new Exception('Invitation code is already used', 2);
             }
 
-            $constraint = new Assert\Collection([
-                'fields' => [
-                    'email' => new Assert\Email(),
-                    'pip' => new Assert\Length(['min' => 3, 'max' => 255]),
-                    'mobile' => new Assert\Length(['min' => 3, 'max' => 255]),
-                    'password' => new Assert\Length(['min' => 3, 'max' => 255]),
-                ],
-                'allowExtraFields' => true,
-            ]);
+            $user = new User();
+
+            $user->setEmail($req->query->get('email', ''));
+            $user->setPassword($req->query->get('password', ''));
+            $user->setMobile($req->query->get('mobile', ''));
+            $user->setFullName($req->query->get('pip', ''));
+            $user->setInvitedByCode($inv_code);
             
-            $errors = $validator->validate($req->query->all(), $constraint);
+            $errors = $validator->validate($user);
             if (count($errors)) {
                 $cnt = count($errors);
                 throw new Exception("Validation errors($cnt): " . $this->formatErrors($errors), 3);
             }
-
-            $user = new User();
-
-            $user->setEmail($req->query->get('email'));
-            $user->setPassword($req->query->get('password'));
-            $user->setMobile($req->query->get('mobile'));
-            $user->setFullName($req->query->get('pip'));
-            $user->setInvitedByCode($inv_code);
 
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
