@@ -26,10 +26,10 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="full_name", type="string", length=255)
      * @Assert\NotBlank
      */
-    private $full_name;
+    private $pip;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -72,12 +72,12 @@ class User
 
     public function getFullName(): ?string
     {
-        return $this->full_name;
+        return $this->pip;
     }
 
     public function setFullName(string $full_name): self
     {
-        $this->full_name = $full_name;
+        $this->pip = $full_name;
 
         return $this;
     }
@@ -163,6 +163,18 @@ class User
         if ($newInvitee !== $invited_by_code->getInvitee()) {
             $invited_by_code->setInvitee($newInvitee);
         }
+
+        return $this;
+    }
+
+    public function getPip(): ?string
+    {
+        return $this->pip;
+    }
+
+    public function setPip(string $pip): self
+    {
+        $this->pip = $pip;
 
         return $this;
     }
