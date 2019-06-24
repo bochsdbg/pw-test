@@ -117,6 +117,18 @@ class ApiV1Controller extends AbstractController
         }
     }
 
+    /**
+     * @Route("/core/v1/")
+     */
+    public function index(Request $req) 
+    {
+        switch ($req->query->get('do')) {
+        case 'insreg': return $this->forward('App\\Controller\\ApiV1Controller::insreg', [], $req->query->all());
+        case 'chinv': return $this->forward('App\\Controller\\ApiV1Controller::chinv', [], $req->query->all());
+        default: new NotFoundHttpException('Method does not exist');
+        }
+    }
+
     private function formatErrors(ConstraintViolationListInterface $errors): string 
     {
         $messages = [];
